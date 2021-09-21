@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "chalk": "^4.1.2",
+    "execa": "^5.1.1"
+  }
+}
