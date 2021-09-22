@@ -1,4 +1,11 @@
 {
+  "name": "node-esm-examples",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "scenarios": "ls scenarios | cat",
+    "scenario": "node scripts/run.js"
+  },
   "devDependencies": {
     "chalk": "^4.1.2",
     "execa": "^5.1.1"
