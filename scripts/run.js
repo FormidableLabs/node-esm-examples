@@ -6,6 +6,7 @@ const os = require('os');
 
 
 const chalk = require("chalk");
+const strip = require("strip-ansi");
 const execa = require("execa");
 
 const HOME = os.homedir();
@@ -17,18 +18,24 @@ const MODES = {
 
 const MATRIX = [
   {
-    node: "10.24.1",
-    mode: "CJS"
+    node: chalk.red("10.24.1"),
+    mode: chalk.magenta("CJS")
   },
   {
-    node: "14.17.6",
-    mode: "CJS"
+    node: chalk.yellow("14.17.6"),
+    mode: chalk.magenta("CJS")
   },
   {
-    node: "14.17.6",
-    mode: "ESM"
+    node: chalk.yellow("14.17.6"),
+    mode: chalk.green("ESM")
   }
 ];
+
+// Provide raw string versions
+MATRIX.forEach((el, i) => {
+  el.nodeRaw = strip(el.node);
+  el.modeRaw = strip(el.mode);
+});
 
 const run = async () => {
   const scenario = process.argv[2];
@@ -41,11 +48,19 @@ const run = async () => {
     throw new Error(`Could not read ${scenarioDir}`);
   });
 
-  for (let { node, mode } of MATRIX) {
-    const nodePath = path.resolve(HOME, `.nvm/versions/node/v${node}/bin/node`)
-    const indexPath = path.resolve(scenarioDir, MODES[mode]);
+  for (let { node, nodeRaw, mode, modeRaw } of MATRIX) {
+    const nodePath = path.resolve(HOME, `.nvm/versions/node/v${nodeRaw}/bin/node`)
+    const indexPath = path.resolve(scenarioDir, MODES[modeRaw]);
     const { stdout } = await execa(nodePath, [indexPath]);
-    console.log(chalk`{cyan ${node} }{green ${mode}} ${stdout.trim()}`);
+
+    // Chalk-enhance messages with `-`
+    let msg = stdout.trim();
+    const [file, ...rest] = msg.split(" - ");
+    if (file) {
+      msg = chalk`{cyan ${file}}${rest.length ? [""].concat(rest).join(" - ") : ""}`;
+    }
+
+    console.log(chalk`{gray [${node}] [${mode}]} ${msg}`);
   }
 };
 
