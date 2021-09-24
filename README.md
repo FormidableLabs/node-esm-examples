@@ -25,7 +25,7 @@ We require the actual versions to speed up execution of known runtimes.
 
 ## Run the examples
 
-To see available scenarios:
+To see available [scenarios](./scenarios):
 
 ```sh
 $ yarn scenarios
