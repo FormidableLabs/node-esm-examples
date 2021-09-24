@@ -38,8 +38,8 @@ MATRIX.forEach((el) => {
   el.modeRaw = strip(el.mode);
 });
 
-const run = async () => {
-  const scenario = process.argv[2]; // eslint-disable-line no-magic-numbers
+// eslint-disable-next-line max-statements
+const run = async (scenario) => {
   if (!scenario) {
     throw new Error("Must provide a scenario");
   }
@@ -48,6 +48,12 @@ const run = async () => {
   await fs.access(scenarioDir).catch(() => {
     throw new Error(`Could not read ${scenarioDir}`);
   });
+
+  const descPath = path.resolve(__dirname, `../scenarios/${scenario}/README.md`);
+  const desc = (await fs.readFile(descPath)).toString();
+
+  log(chalk `\n{cyan ## {underline.bold ${scenario}}}`);
+  log(chalk `{italic.gray ${desc.trim()}}`);
 
   for (const { node, nodeRaw, mode, modeRaw } of MATRIX) {
     const nodePath = path.resolve(HOME, `.nvm/versions/node/v${nodeRaw}/bin/node`);
@@ -65,9 +71,20 @@ const run = async () => {
   }
 };
 
+// Run all scenarios.
+const runAll = async () => {
+  const scenarios = await fs.readdir(path.resolve(__dirname, "../scenarios"));
+  // Iterate scenarios in **serial** for readability.
+  for (const scenario of scenarios) {
+    await run(scenario);
+  }
+};
+
 // Script
 if (require.main === module) {
-  run().catch((err) => {
+  const scenario = process.argv[2]; // eslint-disable-line no-magic-numbers
+  const runner = scenario ? run : runAll;
+  runner(scenario).catch((err) => {
     console.error(err); // eslint-disable-line no-console
     process.exit(1); // eslint-disable-line no-process-exit
   });

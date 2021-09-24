@@ -48,3 +48,5 @@ $ yarn scenario different-index
 14.17.6 CJS require.js
 14.17.6 ESM import.mjs
 ```
+
+or just run `yarn scenario` to run **all** the scenarios!
