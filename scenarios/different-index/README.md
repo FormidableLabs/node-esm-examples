@@ -1,1 +1,1 @@
-The root exported file differs both by Node.js version _and_ runtime.
+The root exported file differs both by Node.js version _and_ mode.
