@@ -2,12 +2,13 @@
 
 const fs = require("fs").promises;
 const path = require("path");
-const os = require('os');
+const os = require("os");
 
 
 const chalk = require("chalk");
 const strip = require("strip-ansi");
 const execa = require("execa");
+const { log } = console;
 
 const HOME = os.homedir();
 
@@ -32,13 +33,13 @@ const MATRIX = [
 ];
 
 // Provide raw string versions
-MATRIX.forEach((el, i) => {
+MATRIX.forEach((el) => {
   el.nodeRaw = strip(el.node);
   el.modeRaw = strip(el.mode);
 });
 
 const run = async () => {
-  const scenario = process.argv[2];
+  const scenario = process.argv[2]; // eslint-disable-line no-magic-numbers
   if (!scenario) {
     throw new Error("Must provide a scenario");
   }
@@ -48,8 +49,8 @@ const run = async () => {
     throw new Error(`Could not read ${scenarioDir}`);
   });
 
-  for (let { node, nodeRaw, mode, modeRaw } of MATRIX) {
-    const nodePath = path.resolve(HOME, `.nvm/versions/node/v${nodeRaw}/bin/node`)
+  for (const { node, nodeRaw, mode, modeRaw } of MATRIX) {
+    const nodePath = path.resolve(HOME, `.nvm/versions/node/v${nodeRaw}/bin/node`);
     const indexPath = path.resolve(scenarioDir, MODES[modeRaw]);
     const { stdout } = await execa(nodePath, [indexPath]);
 
@@ -57,18 +58,18 @@ const run = async () => {
     let msg = stdout.trim();
     const [file, ...rest] = msg.split(" - ");
     if (file) {
-      msg = chalk`{cyan ${file}}${rest.length ? [""].concat(rest).join(" - ") : ""}`;
+      msg = chalk `{cyan ${file}}${rest.length ? [""].concat(rest).join(" - ") : ""}`;
     }
 
-    console.log(chalk`{gray [${node}] [${mode}]} ${msg}`);
+    log(chalk `{gray [${node}] [${mode}]} ${msg}`);
   }
 };
 
 // Script
 if (require.main === module) {
   run().catch((err) => {
-    console.log(err);
-    process.exit(1);
+    console.error(err); // eslint-disable-line no-console
+    process.exit(1); // eslint-disable-line no-process-exit
   });
 }
 

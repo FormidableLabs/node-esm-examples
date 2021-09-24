@@ -1,0 +1,7 @@
+---
+extends:
+  - formidable/configurations/es6-browser
+
+rules:
+  object-property-newline: ["error", { allowAllPropertiesOnSameLine: true }]
+  no-console: "off"
