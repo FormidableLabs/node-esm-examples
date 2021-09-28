@@ -64,7 +64,7 @@ const run = async (scenario) => {
     let msg = stdout.trim();
     const [file, ...rest] = msg.split(" - ");
     if (file) {
-      msg = chalk `{cyan ${file}}${rest.length ? [""].concat(rest).join(" - ") : ""}`;
+      msg = chalk `{underline.cyan ${file}}${rest.length ? [""].concat(rest).join(" - ") : ""}`;
     }
 
     log(chalk `{gray [${node}] [${mode}]} ${msg}`);

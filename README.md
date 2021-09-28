@@ -29,7 +29,7 @@ To see available [scenarios](./scenarios):
 
 ```sh
 $ yarn scenarios
-different-index
+different-root
 ...
 ```
 
@@ -43,10 +43,13 @@ $ yarn scenario [NAME]
 ...
 
 # Example
-$ yarn scenario different-index
-10.24.1 CJS main.js
-14.17.6 CJS require.js
-14.17.6 ESM import.mjs
+$ yarn scenario different-root
+
+## different-root
+The root exported file differs both by Node.js version _and_ mode.
+[10.24.1] [CJS] main.js - from package.main on old Node.js
+[14.17.6] [CJS] require.js - from package.exports root require match
+[14.17.6] [ESM] import.mjs - from package.exports root import match
 ```
 
 or just run `yarn scenario` to run **all** the scenarios!
