@@ -58,13 +58,18 @@ const run = async (scenario) => {
   for (const { node, nodeRaw, mode, modeRaw } of MATRIX) {
     const nodePath = path.resolve(HOME, `.nvm/versions/node/v${nodeRaw}/bin/node`);
     const indexPath = path.resolve(scenarioDir, MODES[modeRaw]);
-    const { stdout } = await execa(nodePath, [indexPath]);
+    const { stdout, stderr } = await execa(nodePath, [indexPath]);
 
     // Chalk-enhance messages with `-`
     let msg = stdout.trim();
     const [file, ...rest] = msg.split(" - ");
     if (file) {
       msg = chalk `{underline.cyan ${file}}${rest.length ? [""].concat(rest).join(" - ") : ""}`;
+    } else if (stderr) {
+      const err = stderr
+        .replace(/\(node:[0-9]+\) /, "")
+        .split("\n")[0];
+      msg = chalk `{underline.red error} - {gray ${err}}`;
     }
 
     log(chalk `{gray [${node}] [${mode}]} ${msg}`);
