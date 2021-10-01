@@ -58,18 +58,33 @@ const run = async (scenario) => {
   for (const { node, nodeRaw, mode, modeRaw } of MATRIX) {
     const nodePath = path.resolve(HOME, `.nvm/versions/node/v${nodeRaw}/bin/node`);
     const indexPath = path.resolve(scenarioDir, MODES[modeRaw]);
-    const { stdout, stderr } = await execa(nodePath, [indexPath]);
+
+    // Exec and capture errors.
+    let msg;
+    let errMsg;
+    try {
+      const { stdout, stderr } = await execa(nodePath, [indexPath]);
+      if (stderr) {
+        errMsg = stderr;
+      } else {
+        msg = stdout.trim();
+      }
+    } catch (err) {
+      // Find likely actual error message.
+      errMsg = err.stderr.split("\n").find((line) => (/^[a-zA-Z]+:.*/).test(line)) || err.stderr;
+    }
 
     // Chalk-enhance messages with `-`
-    let msg = stdout.trim();
-    const [file, ...rest] = msg.split(" - ");
-    if (file) {
-      msg = chalk `{underline.cyan ${file}}${rest.length ? [""].concat(rest).join(" - ") : ""}`;
-    } else if (stderr) {
-      const err = stderr
+    if (errMsg) {
+      errMsg = errMsg
         .replace(/\(node:[0-9]+\) /, "")
         .split("\n")[0];
-      msg = chalk `{underline.red error} - {gray ${err}}`;
+      msg = chalk `{underline.red error} - {gray ${errMsg}}`;
+    } else if (msg) {
+      const [file, ...rest] = msg.split(" - ");
+      if (file) {
+        msg = chalk `{underline.cyan ${file}}${rest.length ? [""].concat(rest).join(" - ") : ""}`;
+      }
     }
 
     log(chalk `{gray [${node}] [${mode}]} ${msg}`);
