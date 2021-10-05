@@ -16,8 +16,7 @@ $ yarn install
 Next, you will need [nvm](https://github.com/nvm-sh/nvm) and the following Node.js **exact** runtimes:
 
 ```sh
-$ nvm install 10.24.1
-$ nvm install 12.22.6
+$ nvm install 12.0.0
 $ nvm install 14.17.6
 ```
 
@@ -47,7 +46,7 @@ $ yarn scenario different-root
 
 ## different-root
 The root exported file differs both by Node.js version _and_ mode.
-[10.24.1] [CJS] main.js - from package.main on old Node.js
+[12.0.0] [CJS] main.js - from package.main on old Node.js
 [14.17.6] [CJS] require.js - from package.exports root require match
 [14.17.6] [ESM] import.mjs - from package.exports root import match
 ```

@@ -19,7 +19,7 @@ const MODES = {
 
 const MATRIX = [
   {
-    node: chalk.red("10.24.1"),
+    node: chalk.red("12.0.0"),
     mode: chalk.magenta("CJS")
   },
   {
