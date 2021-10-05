@@ -5,8 +5,8 @@
   "scripts": {
     "scenarios": "ls scenarios | cat",
     "scenario": "node scripts/run.js",
-    "lint-cjs": "eslint .",
-    "lint-esm": "eslint --config=.eslintrc-esm **/*.mjs",
+    "lint-cjs": "eslint . '**/*.{js,cjs}'",
+    "lint-esm": "eslint --config=.eslintrc-esm '**/*.mjs'",
     "lint": "yarn lint-cjs && yarn lint-esm",
     "lint-fix": "yarn lint-cjs --fix && yarn lint-esm --fix"
   },
