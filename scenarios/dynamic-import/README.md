@@ -1,1 +1,1 @@
-The root exported file differs both by Node.js version _and_ mode.
+An ESM file is dynamically imported in both CommonJS and ESM code.

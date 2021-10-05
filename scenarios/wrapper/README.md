@@ -1,0 +1,1 @@
+A core CommonJS index file is imported and re-exported by an ESM index file.
