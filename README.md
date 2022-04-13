@@ -1,6 +1,8 @@
 Node.js ESM Examples
 ====================
 
+[![Maintenance Status][maintenance-image]](#maintenance-status)
+
 Examples with Node.js runtimes and modern ESM support.
 
 ## Installation
@@ -69,3 +71,5 @@ or just run `yarn scenario` to run **all** the scenarios!
 ## Maintenance Status
 
 **Experimental:** This project is quite new. We're not sure what our ongoing maintenance plan for this project will be. Bug reports, feature requests and pull requests are welcome. If you like this project, let us know!
+
+[maintenance-image]: https://img.shields.io/badge/Maintenance-experimental-blueviolet
