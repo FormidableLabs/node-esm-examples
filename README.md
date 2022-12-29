@@ -1,5 +1,4 @@
-Node.js ESM Examples
-====================
+[![Node.js ESM Examples — Formidable, We build the modern web](./node-esm-examples-Hero.png)](https://formidable.com/open-source/)
 
 [![Maintenance Status][maintenance-image]](#maintenance-status)
 
