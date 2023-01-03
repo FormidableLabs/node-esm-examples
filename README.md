@@ -1,4 +1,4 @@
-[![Node.js ESM Examples — Formidable, We build the modern web](./node-esm-examples-Hero.png)](https://formidable.com/open-source/)
+[![Node.js ESM Examples — Formidable, We build the modern web](https://raw.githubusercontent.com/FormidableLabs/node-esm-examples/main/node-esm-examples-Hero.png)](https://formidable.com/open-source/)
 
 [![Maintenance Status][maintenance-image]](#maintenance-status)
 
